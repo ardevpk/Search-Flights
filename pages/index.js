@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
 import axios from "axios";
 import SearchForm from "../components/SearchForm";
@@ -7,9 +9,29 @@ export default function Home() {
   const [flights, setFlights] = useState([]);
 
   const handleSearch = async (formData) => {
+    const { departureDetails, destinationDetails, departureDate, returnDate, adults, journeyType, cabinClass } = formData;
+    let requestBody = {
+    //   originSkyId: departureDetails.skyId,
+      originEntityId: departureDetails.entityId,
+      adults: adults,
+      journeyType: journeyType,
+      cabinClass: cabinClass
+    }
+    if (departureDate) {
+      requestBody.travelDate = departureDate;
+    }
+    if (returnDate) {
+      requestBody.returnDate = returnDate;
+    }
+    if (destinationDetails) {
+      requestBody.destinationSkyId = destinationDetails.skyId;
+      requestBody.destinationEntityId = destinationDetails.entityId;
+    }
     try {
-      const response = await axios.post("/api/searchFlights", formData);
-      setFlights(response.data.flights || []);
+      console.log({...requestBody});
+      const flightResponse = await axios.post("/api/searchFlights", requestBody);
+      console.log(flightResponse.data);
+      setFlights(flightResponse.data.data.results || []);
     } catch (error) {
       console.error("Error fetching flights", error);
     }
@@ -17,6 +39,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
+      <ToastContainer />
       {/* Header */}
       <header className="sticky top-0 z-50 bg-blue-600 text-white p-4 shadow-md">
         <div className="container mx-auto flex items-center justify-between">
@@ -28,7 +51,7 @@ export default function Home() {
       <main className="flex-grow">
         <section className="mt-12 p-6 bg-white shadow-lg rounded-lg max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold text-center mb-6 text-black">
-            Search for Flights
+            Search for Airports and Flights
           </h2>
           <SearchForm onSearch={handleSearch} />
         </section>
