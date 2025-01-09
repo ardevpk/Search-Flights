@@ -16,4 +16,4 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Live Demo: https://spotter-assessment.vercel.app [https://spotter-assessment.vercel.app/]
+### Live Demo: [https://spotter-assessment.vercel.app](https://spotter-assessment.vercel.app/)
