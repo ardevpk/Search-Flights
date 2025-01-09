@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;   /* Light Mode Background */
+  --foreground: #171717;   /* Default Dark Text Color */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;   /* Dark Mode Background */
+    --foreground: #ededed;    /* Dark Mode Text Color (light text for dark background) */
+  }
+}
+
+body {
+  color: var(--foreground);  /* Apply the foreground color */
+  background: var(--background); /* Apply the background color */
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.text-foreground {
+  color: var(--foreground) !important;  /* Force text color */
+}
+
+.text-gray-900 {
+  color: #171717;  /* Strong dark text */
+}
